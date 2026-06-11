@@ -113,3 +113,278 @@ RIGHT SHIFT AND BITWISE AND EXPLANATION
 
 ----------------------------------------------------
 */
+
+
+
+
+No problem. This is one of the most important bit-manipulation concepts in Embedded C.
+
+Let's take a very small example.
+
+Suppose:
+
+n = 13;
+
+Binary of 13:
+
+1101
+
+(Assume only 4 bits for simplicity.)
+
+
+---
+
+What does >> do?
+
+>> means right shift.
+
+Example:
+
+13 >> 0
+
+1101
+
+
+---
+
+13 >> 1
+
+0110
+
+The bits move one position to the right.
+
+
+---
+
+13 >> 2
+
+0011
+
+
+---
+
+13 >> 3
+
+0001
+
+
+---
+
+What does & 1 do?
+
+& is Bitwise AND.
+
+Rule:
+
+0 & 0 = 0
+0 & 1 = 0
+1 & 0 = 0
+1 & 1 = 1
+
+When we do:
+
+(number) & 1
+
+we are checking only the last bit.
+
+Example:
+
+6 = 0110
+
+0110
+0001
+----
+0000
+
+Result:
+
+0
+
+
+---
+
+Example:
+
+7 = 0111
+
+0111
+0001
+----
+0001
+
+Result:
+
+1
+
+
+---
+
+Now combine both
+
+Take:
+
+n = 13
+
+Binary:
+
+1101
+
+
+---
+
+i = 3
+
+(13 >> 3)
+
+0001
+
+Now:
+
+0001 & 0001
+
+Result:
+
+1
+
+Printed:
+
+1
+
+
+---
+
+i = 2
+
+13 >> 2
+
+0011
+
+Now:
+
+0011
+0001
+----
+0001
+
+Result:
+
+1
+
+Printed:
+
+1
+
+
+---
+
+i = 1
+
+13 >> 1
+
+0110
+
+Now:
+
+0110
+0001
+----
+0000
+
+Result:
+
+0
+
+Printed:
+
+0
+
+
+---
+
+i = 0
+
+13 >> 0
+
+1101
+
+Now:
+
+1101
+0001
+----
+0001
+
+Result:
+
+1
+
+Printed:
+
+1
+
+
+---
+
+Final output:
+
+1101
+
+which is exactly the binary representation of 13.
+
+
+---
+
+Why do we use this trick?
+
+(n >> i) & 1
+
+means:
+
+> "Move bit number i to the last position and then check whether it is 0 or 1."
+
+
+
+This extracts a single bit.
+
+
+---
+
+STM32 Example
+
+Suppose a GPIO register contains:
+
+GPIOA_IDR = 0b10110010
+
+To read bit 5:
+
+(GPIOA_IDR >> 5) & 1
+
+Calculation:
+
+10110010 >> 5
+
+00000101
+
+Now:
+
+00000101
+00000001
+---------
+00000001
+
+Result:
+
+1
+
+Meaning bit 5 is HIGH.
+
+
+---
+
+One-line Memory Trick
+
+(n >> i) & 1
+
+= Extract the ith bit of n.
+
+This statement is used everywhere in Embedded C, STM32 register programming, UART, SPI, I2C, CAN, and device driver development.
