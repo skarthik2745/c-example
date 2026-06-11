@@ -17,3 +17,12 @@ int main()
 
     return 0;
 }
+
+
+
+Press a key (getch):
+You pressed: A
+
+Press a key (getche):
+B
+You pressed: B
